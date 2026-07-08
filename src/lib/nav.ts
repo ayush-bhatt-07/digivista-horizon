@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Building2, Network, Cpu, AlertTriangle, TicketCheck,
-  Wrench, ClipboardCheck, ClipboardList, FileBarChart, Bell, ShieldCheck, Settings,
+  Wrench, ClipboardCheck, ClipboardList, FileBarChart, BarChart3, Bell, ShieldCheck, Settings,
   type LucideIcon,
 } from "lucide-react";
 import type { ModuleKey } from "./roles";
