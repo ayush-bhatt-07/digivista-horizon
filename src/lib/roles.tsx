@@ -63,6 +63,7 @@ export type ModuleKey =
   | "assets"
   | "faults"
   | "tickets"
+  | "service_verification"
   | "engineers"
   | "checklists"
   | "reports"
@@ -73,14 +74,16 @@ export type ModuleKey =
 export const ROLE_MODULES: Record<Role, ModuleKey[]> = {
   digivista_admin: [
     "dashboard", "companies", "branches", "assets", "faults", "tickets",
-    "engineers", "checklists", "reports", "notifications", "audit", "settings",
+    "service_verification", "engineers", "checklists", "reports",
+    "notifications", "audit", "settings",
   ],
   corporate_admin: [
     "dashboard", "branches", "assets", "faults", "tickets",
-    "checklists", "reports", "notifications", "settings",
+    "service_verification", "checklists", "reports", "notifications", "settings",
   ],
   branch_manager: [
-    "dashboard", "assets", "faults", "tickets", "checklists", "reports", "notifications",
+    "dashboard", "assets", "faults", "tickets", "service_verification",
+    "checklists", "reports", "notifications",
   ],
   field_engineer: [
     "dashboard", "tickets", "checklists",

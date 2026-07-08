@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { AppSidebar } from "./app-sidebar";
 import { TopHeader } from "./top-header";
 import { CommandPalette, useCommandPalette } from "./command-palette";
+import { Toaster } from "@/components/ui/sonner";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,6 +19,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <CommandPalette open={open} onOpenChange={setOpen} />
+      <Toaster />
     </div>
   );
 }
