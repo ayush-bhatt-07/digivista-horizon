@@ -10,11 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServiceVerificationRouteImport } from './routes/service-verification'
+import { Route as ServiceAnalyticsRouteImport } from './routes/service-analytics'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServiceAnalyticsWarehouseRouteImport } from './routes/service-analytics.$warehouse'
 
 const ServiceVerificationRoute = ServiceVerificationRouteImport.update({
   id: '/service-verification',
   path: '/service-verification',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceAnalyticsRoute = ServiceAnalyticsRouteImport.update({
+  id: '/service-analytics',
+  path: '/service-analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,30 +29,56 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServiceAnalyticsWarehouseRoute =
+  ServiceAnalyticsWarehouseRouteImport.update({
+    id: '/$warehouse',
+    path: '/$warehouse',
+    getParentRoute: () => ServiceAnalyticsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/service-verification'
+  fullPaths:
+    | '/'
+    | '/service-analytics'
+    | '/service-verification'
+    | '/service-analytics/$warehouse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/service-verification'
-  id: '__root__' | '/' | '/service-verification'
+  to:
+    | '/'
+    | '/service-analytics'
+    | '/service-verification'
+    | '/service-analytics/$warehouse'
+  id:
+    | '__root__'
+    | '/'
+    | '/service-analytics'
+    | '/service-verification'
+    | '/service-analytics/$warehouse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ServiceAnalyticsRoute: typeof ServiceAnalyticsRouteWithChildren
   ServiceVerificationRoute: typeof ServiceVerificationRoute
 }
 
@@ -58,6 +91,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceVerificationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service-analytics': {
+      id: '/service-analytics'
+      path: '/service-analytics'
+      fullPath: '/service-analytics'
+      preLoaderRoute: typeof ServiceAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,11 +105,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service-analytics/$warehouse': {
+      id: '/service-analytics/$warehouse'
+      path: '/$warehouse'
+      fullPath: '/service-analytics/$warehouse'
+      preLoaderRoute: typeof ServiceAnalyticsWarehouseRouteImport
+      parentRoute: typeof ServiceAnalyticsRoute
+    }
   }
 }
 
+interface ServiceAnalyticsRouteChildren {
+  ServiceAnalyticsWarehouseRoute: typeof ServiceAnalyticsWarehouseRoute
+}
+
+const ServiceAnalyticsRouteChildren: ServiceAnalyticsRouteChildren = {
+  ServiceAnalyticsWarehouseRoute: ServiceAnalyticsWarehouseRoute,
+}
+
+const ServiceAnalyticsRouteWithChildren =
+  ServiceAnalyticsRoute._addFileChildren(ServiceAnalyticsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ServiceAnalyticsRoute: ServiceAnalyticsRouteWithChildren,
   ServiceVerificationRoute: ServiceVerificationRoute,
 }
 export const routeTree = rootRouteImport
