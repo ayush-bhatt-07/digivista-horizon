@@ -26,6 +26,7 @@ export const NAV_ITEMS: NavItem[] = [
   { key: "engineers", label: "Engineers", to: "/engineers", icon: Wrench, group: "Manage" },
 
   { key: "reports", label: "Reports", to: "/reports", icon: FileBarChart, group: "Insights" },
+  { key: "service_analytics", label: "Service Analytics", to: "/service-analytics", icon: BarChart3, group: "Insights" },
   { key: "audit", label: "Audit log", to: "/audit", icon: ShieldCheck, group: "Insights" },
 
   { key: "notifications", label: "Notifications", to: "/notifications", icon: Bell, group: "System" },
