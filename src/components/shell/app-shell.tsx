@@ -19,6 +19,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <CommandPalette open={open} onOpenChange={setOpen} />
+      <Toaster />
     </div>
   );
 }
