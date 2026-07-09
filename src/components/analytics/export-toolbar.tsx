@@ -2,6 +2,7 @@ import { Download, FileSpreadsheet, FileText, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { getAnalyticsData } from "@/lib/analytics/data";
+import { generateBrandedPDF } from "@/lib/pdf/branded-pdf";
 
 function triggerDownload(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
