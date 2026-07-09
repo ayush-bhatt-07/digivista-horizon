@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronsLeft, Search, ShieldCheck } from "lucide-react";
+import { ChevronsLeft, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { NAV_ITEMS } from "@/lib/nav";
 import { useRole } from "@/lib/roles";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { StatusChip } from "@/components/shell/status-chip";
+import { BrandLogo } from "@/components/shell/brand-logo";
 
 const GROUP_ORDER = ["Operate", "Manage", "Insights", "System"] as const;
 
