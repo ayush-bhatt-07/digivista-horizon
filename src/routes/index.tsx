@@ -14,8 +14,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Dashboard — Digivista Console" },
       { name: "description", content: "Operational overview of assets, tickets, and SLA health across your Digivista workspaces." },
-      { property: "og:title", content: "Digivista Infotech Console" },
-      { property: "og:description", content: "Enterprise asset lifecycle & field service management." },
+      { property: "og:title", content: "Dashboard — Digivista Console" },
+      { property: "og:description", content: "Operational overview of assets, tickets, and SLA health across your Digivista workspaces." },
     ],
   }),
   component: Dashboard,
