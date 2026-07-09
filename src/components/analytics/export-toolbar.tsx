@@ -149,28 +149,84 @@ export function ExportToolbar() {
     toast.success("Excel report downloaded");
   };
 
-  const exportPDF = () => {
-    // Open printable HTML in a new tab and auto-trigger the print dialog so
-    // the user can "Save as PDF" from the browser — no extra dependency.
-    const html = buildReportHTML();
-    const w = window.open("", "_blank");
-    if (!w) {
-      // Popup blocked — fall back to downloading the HTML file directly.
-      triggerDownload(new Blob([html], { type: "text/html;charset=utf-8" }), `service-analytics-${todayStamp()}.html`);
-      toast.info("Popup blocked — downloaded HTML instead", { description: "Open the file and print to PDF." });
-      return;
-    }
-    w.document.open();
-    w.document.write(html);
-    w.document.close();
-    w.addEventListener("load", () => setTimeout(() => w.print(), 300));
-    toast.success("PDF report ready", { description: "Choose 'Save as PDF' in the print dialog." });
+  const buildPDFOptions = (title: string, filename: string) => {
+    const d = getAnalyticsData();
+    return {
+      filename,
+      title,
+      subtitle: "Executive summary of service verification performance across all Digivista branches.",
+      meta: [
+        { label: "Total Reviews", value: String(d.summary.totalReviews) },
+        { label: "Branches", value: String(d.summary.branchesCovered) },
+        { label: "Avg Rating", value: `${d.summary.averageRating} ★` },
+        { label: "Last Updated", value: d.summary.lastUpdated },
+      ],
+      sections: [
+        {
+          heading: "Executive KPIs",
+          table: {
+            headers: ["Metric", "Value", "Delta", "Note"],
+            body: d.kpis.map((k) => [k.label, k.value, k.delta ?? "—", k.hint ?? ""]),
+          },
+        },
+        {
+          heading: "Monthly Trend",
+          table: {
+            headers: ["Month", "Rating", "Volume"],
+            body: d.trend.map((t) => [t.month, t.rating, t.volume]),
+          },
+        },
+        {
+          heading: "Branch Performance",
+          table: {
+            headers: ["Branch", "Rating", "Reviews"],
+            body: d.branches.map((b) => [b.branch, b.rating, b.reviews]),
+          },
+        },
+        {
+          heading: "Engineer Leaderboard",
+          table: {
+            headers: ["Engineer", "Rating", "Reviews", "Compliance %"],
+            body: d.engineers.map((e) => [e.name, e.rating, e.reviews, e.compliance]),
+          },
+        },
+        {
+          heading: "Warehouse Health",
+          table: {
+            headers: ["Warehouse", "Region", "Rating", "Health"],
+            body: d.warehouses.map((w) => [w.name, w.region, w.rating, w.health]),
+          },
+        },
+        {
+          heading: "Recent Reviews",
+          table: {
+            headers: ["Date", "Warehouse", "Engineer", "Rating", "Status"],
+            body: d.reviews.slice(0, 15).map((r) => [r.date, r.warehouse, r.engineer, r.rating, r.status]),
+          },
+        },
+        { heading: "AI Insights", bullets: d.insights },
+      ],
+    };
   };
 
-  const exportMonthly = () => {
-    const html = buildReportHTML();
-    triggerDownload(new Blob([html], { type: "text/html;charset=utf-8" }), `monthly-report-${todayStamp()}.html`);
-    toast.success("Monthly report downloaded");
+  const exportPDF = async () => {
+    try {
+      await generateBrandedPDF(buildPDFOptions("Service Analytics Report", `service-analytics-${todayStamp()}.pdf`));
+      toast.success("PDF report downloaded");
+    } catch (e) {
+      console.error(e);
+      toast.error("Could not generate PDF");
+    }
+  };
+
+  const exportMonthly = async () => {
+    try {
+      await generateBrandedPDF(buildPDFOptions("Monthly Performance Report", `monthly-report-${todayStamp()}.pdf`));
+      toast.success("Monthly report downloaded");
+    } catch (e) {
+      console.error(e);
+      toast.error("Could not generate PDF");
+    }
   };
 
   return (
