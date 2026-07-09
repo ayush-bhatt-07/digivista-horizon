@@ -81,65 +81,6 @@ function buildWorkbookCSV() {
   return sections.join("\n");
 }
 
-function buildReportHTML() {
-  const d = getAnalyticsData();
-  const style = `
-    <style>
-      * { box-sizing: border-box; }
-      body { font-family: Inter, -apple-system, Segoe UI, sans-serif; color: #0f172a; margin: 40px; }
-      h1 { font-size: 24px; margin: 0 0 4px; }
-      h2 { font-size: 15px; margin: 24px 0 8px; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-      .sub { color: #64748b; font-size: 12px; margin-bottom: 24px; }
-      table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 8px; }
-      th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #e2e8f0; }
-      th { background: #f1f5f9; font-weight: 600; }
-      .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-      .kpi { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; }
-      .kpi .l { font-size: 10px; text-transform: uppercase; color: #64748b; letter-spacing: .04em; }
-      .kpi .v { font-size: 18px; font-weight: 700; margin-top: 2px; }
-      .kpi .d { font-size: 11px; color: #64748b; }
-      ul { margin: 0; padding-left: 18px; font-size: 12px; }
-      @media print { body { margin: 20px; } }
-    </style>`;
-
-  const kpiCards = d.kpis
-    .map((k) => `<div class="kpi"><div class="l">${k.label}</div><div class="v">${k.value}</div><div class="d">${k.delta ?? ""} ${k.hint ?? ""}</div></div>`)
-    .join("");
-
-  const table = (headers: string[], rows: (string | number)[][]) =>
-    `<table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows
-      .map((r) => `<tr>${r.map((c) => `<td>${c ?? ""}</td>`).join("")}</tr>`)
-      .join("")}</tbody></table>`;
-
-  return `<!doctype html><html><head><meta charset="utf-8"/><title>Service Analytics Report — ${todayStamp()}</title>${style}</head><body>
-    <h1>Digivista — Service Analytics Report</h1>
-    <div class="sub">Generated ${new Date().toLocaleString()} · ${d.summary.totalReviews} reviews · ${d.summary.branchesCovered} branches · avg ${d.summary.averageRating}★</div>
-
-    <h2>Executive KPIs</h2>
-    <div class="kpi-grid">${kpiCards}</div>
-
-    <h2>Monthly Trend</h2>
-    ${table(["Month", "Rating", "Volume"], d.trend.map((t) => [t.month, t.rating, t.volume]))}
-
-    <h2>Branch Performance</h2>
-    ${table(["Branch", "Rating", "Reviews"], d.branches.map((b) => [b.branch, b.rating, b.reviews]))}
-
-    <h2>Engineer Leaderboard</h2>
-    ${table(["Name", "Rating", "Reviews", "Compliance %", "Badge"], d.engineers.map((e) => [e.name, e.rating, e.reviews, e.compliance, e.badge ?? ""]))}
-
-    <h2>Protocol Compliance</h2>
-    ${table(["Label", "Value"], d.protocol.map((p) => [p.label, p.value]))}
-
-    <h2>Warehouse Health</h2>
-    ${table(["Warehouse", "Region", "Rating", "Reviews", "Health"], d.warehouses.map((w) => [w.name, w.region, w.rating, w.reviews, w.health]))}
-
-    <h2>Recent Reviews</h2>
-    ${table(["Date", "Warehouse", "Engineer", "Rating", "Status", "Manager Comment"], d.reviews.map((r) => [r.date, r.warehouse, r.engineer, r.rating, r.status, r.managerComment]))}
-
-    <h2>AI Insights</h2>
-    <ul>${d.insights.map((i) => `<li>${i}</li>`).join("")}</ul>
-  </body></html>`;
-}
 
 export function ExportToolbar() {
   const exportExcel = () => {
