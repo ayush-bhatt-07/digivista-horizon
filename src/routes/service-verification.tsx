@@ -343,6 +343,7 @@ function ServiceVerificationPage() {
         open={successOpen}
         onOpenChange={setSuccessOpen}
         referenceId={referenceId}
+        submission={submission}
       />
     </>
   );
