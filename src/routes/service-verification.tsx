@@ -93,6 +93,9 @@ function ServiceVerificationPage() {
   const [submitting, setSubmitting] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const [submission, setSubmission] = useState<
+    import("@/lib/service-verification/warehouses").VerificationSubmission | null
+  >(null);
 
   async function handleFetch() {
     if (!warehouseName) return;
@@ -125,6 +128,21 @@ function ServiceVerificationPage() {
     await new Promise((r) => setTimeout(r, 1100));
     const id = generateReferenceId();
     setReferenceId(id);
+    setSubmission({
+      warehouse,
+      managerName,
+      checklist,
+      engineer: ratings,
+      overallRating,
+      recommend,
+      likelihood: likelihood[0],
+      comments,
+      files: files.map((f) => ({ name: f.name, size: f.size })),
+      declaration,
+      signature,
+      date: today,
+      referenceId: id,
+    });
     setSubmitting(false);
     setSuccessOpen(true);
   }
@@ -325,6 +343,7 @@ function ServiceVerificationPage() {
         open={successOpen}
         onOpenChange={setSuccessOpen}
         referenceId={referenceId}
+        submission={submission}
       />
     </>
   );
