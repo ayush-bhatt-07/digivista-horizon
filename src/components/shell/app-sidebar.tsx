@@ -44,13 +44,16 @@ export function AppSidebar({
     >
       {/* Brand */}
       <div className="flex h-14 items-center gap-2 border-b border-sidebar-border px-3">
-        <div className="grid size-8 shrink-0 place-items-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-          <ShieldCheck className="size-4" />
-        </div>
-        {!collapsed && (
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-sm font-semibold text-white">Digivista</div>
-            <div className="truncate text-[11px] text-sidebar-foreground/60">Infotech Console</div>
+        {collapsed ? (
+          <BrandLogo variant="mark" className="mx-auto h-8 w-8 rounded-md bg-white/95 p-0.5" />
+        ) : (
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <BrandLogo className="h-7 w-auto rounded-md bg-white/95 px-1.5 py-1" />
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-[10px] uppercase tracking-wider text-sidebar-foreground/60">
+                Infotech Console
+              </div>
+            </div>
           </div>
         )}
         <Button
