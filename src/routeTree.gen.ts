@@ -9,11 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TicketsRouteImport } from './routes/tickets'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServiceVerificationRouteImport } from './routes/service-verification'
 import { Route as ServiceAnalyticsRouteImport } from './routes/service-analytics'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as FaultsRouteImport } from './routes/faults'
+import { Route as EngineersRouteImport } from './routes/engineers'
+import { Route as CompaniesRouteImport } from './routes/companies'
+import { Route as ChecklistsRouteImport } from './routes/checklists'
+import { Route as BranchesRouteImport } from './routes/branches'
+import { Route as AuditRouteImport } from './routes/audit'
+import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServiceAnalyticsWarehouseRouteImport } from './routes/service-analytics.$warehouse'
+import { Route as EngineersIdRouteImport } from './routes/engineers.$id'
+import { Route as CompaniesIdRouteImport } from './routes/companies.$id'
+import { Route as BranchesIdRouteImport } from './routes/branches.$id'
 
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServiceVerificationRoute = ServiceVerificationRouteImport.update({
   id: '/service-verification',
   path: '/service-verification',
@@ -22,6 +46,51 @@ const ServiceVerificationRoute = ServiceVerificationRouteImport.update({
 const ServiceAnalyticsRoute = ServiceAnalyticsRouteImport.update({
   id: '/service-analytics',
   path: '/service-analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaultsRoute = FaultsRouteImport.update({
+  id: '/faults',
+  path: '/faults',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngineersRoute = EngineersRouteImport.update({
+  id: '/engineers',
+  path: '/engineers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompaniesRoute = CompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChecklistsRoute = ChecklistsRouteImport.update({
+  id: '/checklists',
+  path: '/checklists',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BranchesRoute = BranchesRouteImport.update({
+  id: '/branches',
+  path: '/branches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssetsRoute = AssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -35,55 +104,179 @@ const ServiceAnalyticsWarehouseRoute =
     path: '/$warehouse',
     getParentRoute: () => ServiceAnalyticsRoute,
   } as any)
+const EngineersIdRoute = EngineersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EngineersRoute,
+} as any)
+const CompaniesIdRoute = CompaniesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CompaniesRoute,
+} as any)
+const BranchesIdRoute = BranchesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => BranchesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/branches': typeof BranchesRouteWithChildren
+  '/checklists': typeof ChecklistsRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/engineers': typeof EngineersRouteWithChildren
+  '/faults': typeof FaultsRoute
+  '/notifications': typeof NotificationsRoute
+  '/reports': typeof ReportsRoute
   '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/settings': typeof SettingsRoute
+  '/tickets': typeof TicketsRoute
+  '/branches/$id': typeof BranchesIdRoute
+  '/companies/$id': typeof CompaniesIdRoute
+  '/engineers/$id': typeof EngineersIdRoute
   '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/branches': typeof BranchesRouteWithChildren
+  '/checklists': typeof ChecklistsRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/engineers': typeof EngineersRouteWithChildren
+  '/faults': typeof FaultsRoute
+  '/notifications': typeof NotificationsRoute
+  '/reports': typeof ReportsRoute
   '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/settings': typeof SettingsRoute
+  '/tickets': typeof TicketsRoute
+  '/branches/$id': typeof BranchesIdRoute
+  '/companies/$id': typeof CompaniesIdRoute
+  '/engineers/$id': typeof EngineersIdRoute
   '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
+  '/audit': typeof AuditRoute
+  '/branches': typeof BranchesRouteWithChildren
+  '/checklists': typeof ChecklistsRoute
+  '/companies': typeof CompaniesRouteWithChildren
+  '/engineers': typeof EngineersRouteWithChildren
+  '/faults': typeof FaultsRoute
+  '/notifications': typeof NotificationsRoute
+  '/reports': typeof ReportsRoute
   '/service-analytics': typeof ServiceAnalyticsRouteWithChildren
   '/service-verification': typeof ServiceVerificationRoute
+  '/settings': typeof SettingsRoute
+  '/tickets': typeof TicketsRoute
+  '/branches/$id': typeof BranchesIdRoute
+  '/companies/$id': typeof CompaniesIdRoute
+  '/engineers/$id': typeof EngineersIdRoute
   '/service-analytics/$warehouse': typeof ServiceAnalyticsWarehouseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assets'
+    | '/audit'
+    | '/branches'
+    | '/checklists'
+    | '/companies'
+    | '/engineers'
+    | '/faults'
+    | '/notifications'
+    | '/reports'
     | '/service-analytics'
     | '/service-verification'
+    | '/settings'
+    | '/tickets'
+    | '/branches/$id'
+    | '/companies/$id'
+    | '/engineers/$id'
     | '/service-analytics/$warehouse'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assets'
+    | '/audit'
+    | '/branches'
+    | '/checklists'
+    | '/companies'
+    | '/engineers'
+    | '/faults'
+    | '/notifications'
+    | '/reports'
     | '/service-analytics'
     | '/service-verification'
+    | '/settings'
+    | '/tickets'
+    | '/branches/$id'
+    | '/companies/$id'
+    | '/engineers/$id'
     | '/service-analytics/$warehouse'
   id:
     | '__root__'
     | '/'
+    | '/assets'
+    | '/audit'
+    | '/branches'
+    | '/checklists'
+    | '/companies'
+    | '/engineers'
+    | '/faults'
+    | '/notifications'
+    | '/reports'
     | '/service-analytics'
     | '/service-verification'
+    | '/settings'
+    | '/tickets'
+    | '/branches/$id'
+    | '/companies/$id'
+    | '/engineers/$id'
     | '/service-analytics/$warehouse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssetsRoute: typeof AssetsRoute
+  AuditRoute: typeof AuditRoute
+  BranchesRoute: typeof BranchesRouteWithChildren
+  ChecklistsRoute: typeof ChecklistsRoute
+  CompaniesRoute: typeof CompaniesRouteWithChildren
+  EngineersRoute: typeof EngineersRouteWithChildren
+  FaultsRoute: typeof FaultsRoute
+  NotificationsRoute: typeof NotificationsRoute
+  ReportsRoute: typeof ReportsRoute
   ServiceAnalyticsRoute: typeof ServiceAnalyticsRouteWithChildren
   ServiceVerificationRoute: typeof ServiceVerificationRoute
+  SettingsRoute: typeof SettingsRoute
+  TicketsRoute: typeof TicketsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/service-verification': {
       id: '/service-verification'
       path: '/service-verification'
@@ -96,6 +289,69 @@ declare module '@tanstack/react-router' {
       path: '/service-analytics'
       fullPath: '/service-analytics'
       preLoaderRoute: typeof ServiceAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faults': {
+      id: '/faults'
+      path: '/faults'
+      fullPath: '/faults'
+      preLoaderRoute: typeof FaultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engineers': {
+      id: '/engineers'
+      path: '/engineers'
+      fullPath: '/engineers'
+      preLoaderRoute: typeof EngineersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/companies': {
+      id: '/companies'
+      path: '/companies'
+      fullPath: '/companies'
+      preLoaderRoute: typeof CompaniesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checklists': {
+      id: '/checklists'
+      path: '/checklists'
+      fullPath: '/checklists'
+      preLoaderRoute: typeof ChecklistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/branches': {
+      id: '/branches'
+      path: '/branches'
+      fullPath: '/branches'
+      preLoaderRoute: typeof BranchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assets': {
+      id: '/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof AssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -112,8 +368,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceAnalyticsWarehouseRouteImport
       parentRoute: typeof ServiceAnalyticsRoute
     }
+    '/engineers/$id': {
+      id: '/engineers/$id'
+      path: '/$id'
+      fullPath: '/engineers/$id'
+      preLoaderRoute: typeof EngineersIdRouteImport
+      parentRoute: typeof EngineersRoute
+    }
+    '/companies/$id': {
+      id: '/companies/$id'
+      path: '/$id'
+      fullPath: '/companies/$id'
+      preLoaderRoute: typeof CompaniesIdRouteImport
+      parentRoute: typeof CompaniesRoute
+    }
+    '/branches/$id': {
+      id: '/branches/$id'
+      path: '/$id'
+      fullPath: '/branches/$id'
+      preLoaderRoute: typeof BranchesIdRouteImport
+      parentRoute: typeof BranchesRoute
+    }
   }
 }
+
+interface BranchesRouteChildren {
+  BranchesIdRoute: typeof BranchesIdRoute
+}
+
+const BranchesRouteChildren: BranchesRouteChildren = {
+  BranchesIdRoute: BranchesIdRoute,
+}
+
+const BranchesRouteWithChildren = BranchesRoute._addFileChildren(
+  BranchesRouteChildren,
+)
+
+interface CompaniesRouteChildren {
+  CompaniesIdRoute: typeof CompaniesIdRoute
+}
+
+const CompaniesRouteChildren: CompaniesRouteChildren = {
+  CompaniesIdRoute: CompaniesIdRoute,
+}
+
+const CompaniesRouteWithChildren = CompaniesRoute._addFileChildren(
+  CompaniesRouteChildren,
+)
+
+interface EngineersRouteChildren {
+  EngineersIdRoute: typeof EngineersIdRoute
+}
+
+const EngineersRouteChildren: EngineersRouteChildren = {
+  EngineersIdRoute: EngineersIdRoute,
+}
+
+const EngineersRouteWithChildren = EngineersRoute._addFileChildren(
+  EngineersRouteChildren,
+)
 
 interface ServiceAnalyticsRouteChildren {
   ServiceAnalyticsWarehouseRoute: typeof ServiceAnalyticsWarehouseRoute
@@ -128,19 +441,20 @@ const ServiceAnalyticsRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssetsRoute: AssetsRoute,
+  AuditRoute: AuditRoute,
+  BranchesRoute: BranchesRouteWithChildren,
+  ChecklistsRoute: ChecklistsRoute,
+  CompaniesRoute: CompaniesRouteWithChildren,
+  EngineersRoute: EngineersRouteWithChildren,
+  FaultsRoute: FaultsRoute,
+  NotificationsRoute: NotificationsRoute,
+  ReportsRoute: ReportsRoute,
   ServiceAnalyticsRoute: ServiceAnalyticsRouteWithChildren,
   ServiceVerificationRoute: ServiceVerificationRoute,
+  SettingsRoute: SettingsRoute,
+  TicketsRoute: TicketsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
